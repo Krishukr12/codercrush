@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     isBlocked: { type: Boolean, default: false },
-    role: { type: String, required: true, default: public },
+    role: { type: String, default: "public" },
   },
   { timestamps: true }
 );

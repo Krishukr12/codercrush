@@ -6,7 +6,7 @@ const createCategory = async (req, res, next) => {
     const newCategory = new CategoryModel(req.body);
     await newCategory.save();
     res.status(200).send({
-      status: "success",
+      success: true,
       category: newCategory,
     });
   } catch (error) {
@@ -19,7 +19,7 @@ const getCategories = async (req, res, next) => {
   try {
     const categories = await CategoryModel.find({});
     res.status(200).send({
-      status: "success",
+      success: true,
       categories: categories,
       count: categories.length,
     });
@@ -28,22 +28,20 @@ const getCategories = async (req, res, next) => {
   }
 };
 
-// Delete categories
-
+// Delete category
 const deleteCategory = async (req, res, next) => {
   const ID = req.params.id;
   try {
     await CategoryModel.findByIdAndDelete({ _id: ID });
     res
       .status(200)
-      .send({ status: "success", message: "Category has been deleted" });
+      .send({ success: true, message: "Category has been deleted" });
   } catch (error) {
     next(error);
   }
 };
 
 // Update Category
-
 const updateCategory = async (req, res, next) => {
   const ID = req.params.id;
   const updatedData = req.body;
@@ -53,7 +51,7 @@ const updateCategory = async (req, res, next) => {
       { $set: updatedData },
       { new: true }
     );
-    res.status(200).send({ status: "success", category: newCategory });
+    res.status(200).send({ success: true, category: newCategory });
   } catch (error) {
     next(error);
   }
