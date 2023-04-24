@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const { connection } = require("./config/db");
+const { categoryRouter } = require("./routes/category.route");
+const { articlesRouter } = require("./routes/articles.route");
+const { userRouter } = require("./routes/user.route");
 
 const numCPU = require("os").cpus().length;
 const PORT = process.env.PORT || 8080;
@@ -27,7 +30,10 @@ if (cluster.isMaster) {
   app.get("/", (req, res) => {
     res.send("Working");
   });
-
+  // Routes
+  app.use("/category", categoryRouter);
+  app.use("/article", articlesRouter);
+  app.use("/user", userRouter);
   app.listen(PORT, async () => {
     try {
       await connection;
