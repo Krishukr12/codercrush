@@ -2,23 +2,25 @@ const cluster = require("cluster");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+
 require("dotenv").config();
 
 const { connection } = require("./config/db");
-const { categoryRouter } = require("./routes/category.route");
-const { articlesRouter } = require("./routes/articles.route");
-const { userRouter } = require("./routes/user.route");
 const { errorHandler } = require("./middlewares/errorHandler");
+
+const { categoryRouter } = require("./routes/category.routes");
+const { articlesRouter } = require("./routes/articles.routes");
+const { authRouter } = require("./routes/auth.routes");
 
 const numCPU = require("os").cpus().length;
 const PORT = process.env.PORT || 8080;
 
 if (cluster.isMaster) {
   console.log(`Master process is running with pid ${process.pid}`);
-  // Fork workers
   for (let i = 0; i < numCPU; i++) {
     cluster.fork();
   }
+
   cluster.on("exit", (worker) => {
     console.log(`worker ${worker.process.pid} died`);
     cluster.fork();
@@ -38,7 +40,7 @@ if (cluster.isMaster) {
   // Routes
   app.use("/category", categoryRouter);
   app.use("/article", articlesRouter);
-  app.use("/user", userRouter);
+  app.use("/auth", authRouter);
 
   // Error handler middleware
   app.use(errorHandler);
