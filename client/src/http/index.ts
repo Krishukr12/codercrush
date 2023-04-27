@@ -6,3 +6,6 @@ const api=axios.create({
         Authorization: `Bearer ${process.env.API_TOKEN}`
     }
 })
+
+// Categories
+export const  fetchCategories =async ()=>api.get("/category")
