@@ -27,8 +27,23 @@ const allArticles = async (req, res, next) => {
   }
 };
 // Updates Articles
-const updateArticles = (req, res, next) => {
-  res.send("UPDATE Articles");
+const updateArticles = async (req, res, next) => {
+  try {
+    const updatedData = req.body;
+    const updatedArticle = await ArticleModel.findByIdAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      { $set: updatedData },
+      { new: true }
+    );
+    res.status(200).send({
+      success: true,
+      updatedArticle,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 // Deletes Articles
 const deleteArticles = async (req, res, next) => {
