@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const { UserModel } = require("../models/User.model");
 
 // Sign Up
+
 const createUser = (req, res, next) => {
   const { password, username, email } = req.body;
   try {
@@ -17,9 +18,9 @@ const createUser = (req, res, next) => {
         password: hash,
       });
 
-      const { password, isBlocked, _id, ...otherDetails } = newUser._doc;
-
       await newUser.save();
+
+      const { password, isBlocked, _id, ...otherDetails } = newUser._doc;
 
       res.status(200).json({
         success: true,

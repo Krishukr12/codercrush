@@ -7,9 +7,11 @@ const articleSchema = mongoose.Schema({
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "category",
+    required: true,
   },
 });
 
+const ArticleModel = mongoose.model("article", articleSchema);
 module.exports = {
-  articleSchema,
+  ArticleModel,
 };
