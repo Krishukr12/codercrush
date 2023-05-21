@@ -34,7 +34,7 @@ if (cluster.isMaster) {
 
   app.get("/", (req, res, next) => {
     next();
-    res.send("<h4 >Welcome again Krishu!</h4>");
+    res.send("<h4>Hi! Krishu</h4>");
   });
 
   // Routes
